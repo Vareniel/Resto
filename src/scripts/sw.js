@@ -1,32 +1,32 @@
-/* eslint-disable no-undef */
-import "regenerator-runtime";
-import CacheHelper from "./utils/cache";
+import { precacheAndRoute } from 'workbox-precaching';
+import { registerRoute, Route } from 'workbox-routing';
+import { StaleWhileRevalidate } from 'workbox-strategies';
 
-const assetsToCache = [
-  "./",
-  "./icons/frame 1.png",
-  "./icons/frame 2.png",
-  "./icons/frame 3.png",
-  "./icons/frame 4.png",
-  "./icons/frame 5png",
-  "./icons/frame 6.png",
-  "./icons/frame 7.png",
-  "./icons/frame 8.png",
-  "./index.html",
-  "./favicon.png",
-  "./app.bundle.js",
-  "./app.webmanifest",
-  "./sw.bundle.js",
-];
+// Do precaching
+precacheAndRoute(self.__WB_MANIFEST);
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(CacheHelper.cachingAppShell([...assetsToCache]));
+const restaurantdbApi = new Route(
+  ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/'),
+  new StaleWhileRevalidate({
+    cacheName: 'restaurantdb-api',
+  }),
+);
+
+const restaurantdbImageApi = new Route(
+  ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/images/medium/'),
+  new StaleWhileRevalidate({
+    cacheName: 'restaurantdb-image-api',
+  }),
+);
+
+registerRoute(restaurantdbApi);
+registerRoute(restaurantdbImageApi);
+
+self.addEventListener('install', () => {
+  console.log('Service Worker: Installed');
+  self.skipWaiting();
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(CacheHelper.deleteOldCache());
-});
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(CacheHelper.revalidateCache(event.request));
+self.addEventListener('push', () => {
+  console.log('Service Worker: Pushed');
 });
