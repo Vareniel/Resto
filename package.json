@@ -11,7 +11,9 @@
     "test:watch": "jest --watchAll",
     "build-image": "node sharp.js",
     "e2e": "codeceptjs run --steps",
-    "build": "npm run bb && npm run build-image"
+    "build": "npm run bb && npm run build-image",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "keywords": [],
   "author": "your_name <your.email@domain.com>",
@@ -19,7 +21,8 @@
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
-    "@eslint/js": "^9.2.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.3.0",
     "@jest/globals": "^29.6.1",
     "@types/jest": "^29.5.3",
     "babel-jest": "^29.6.1",
@@ -28,9 +31,11 @@
     "codeceptjs": "^3.6.2",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
-    "eslint": "^9.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
     "fake-indexeddb": "^4.0.2",
-    "globals": "^15.2.0",
+    "globals": "^15.3.0",
     "html-webpack-plugin": "^5.5.3",
     "http-server": "^14.1.1",
     "imagemin-mozjpeg": "^9.0.0",
@@ -56,6 +61,8 @@
     "idb": "^8.0.0",
     "lazysizes": "^5.3.2",
     "regenerator-runtime": "^0.14.0",
+    "workbox-routing": "^7.1.0",
+    "workbox-strategies": "^7.1.0",
     "workbox-window": "^7.1.0"
   }
 }
