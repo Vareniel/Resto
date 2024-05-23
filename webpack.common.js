@@ -4,12 +4,12 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
 const ImageminMozjpeg = require('imagemin-mozjpeg');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const path = require("path");
 
 module.exports = {
   entry: {
     app: path.resolve(__dirname, "src/scripts/index.js"),
-    sw: path.resolve(__dirname, "src/scripts/sw.js"),
   },
   output: {
     filename: "[name].bundle.js",
@@ -40,6 +40,11 @@ module.exports = {
           to: path.resolve(__dirname, "dist/"),
         },
       ],
+    }),
+    
+    new WorkboxWebpackPlugin.InjectManifest({
+      swSrc: path.resolve(__dirname, 'src/scripts/sw.js'),
+      swDest: './sw.bundle.js',
     }),
     new ImageminWebpackPlugin({
       plugins: [
