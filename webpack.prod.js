@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
+const sharpScript = require("./sharp.js"); // Import sharp script
 
 module.exports = merge(common, {
   mode: "production",
@@ -21,4 +22,10 @@ module.exports = merge(common, {
       },
     ],
   },
+  plugins: [
+    new sharpPlugin()
+  ],
 });
+
+// Jalankan sharp.js setelah konfigurasi selesai
+sharpScript();
